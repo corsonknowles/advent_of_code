@@ -1,3 +1,44 @@
+# PART 1
+[83] pry(main)> # runs opcode
+[84] pry(main)> class Computer
+[84] pry(main)*   attr_accessor :current_state, :first, :second, :third, :fourth, :return_value  
+[84] pry(main)*   attr_reader :initial_state  
+[84] pry(main)*   
+[84] pry(main)*   def initialize(initial_state)  
+[84] pry(main)*     @initial_state = initial_state    
+[84] pry(main)*     @current_state = initial_state    
+[84] pry(main)*   end    
+[84] pry(main)*   
+[84] pry(main)*   def process  
+[84] pry(main)*     @current_state.each_slice(4) do |slice|    
+[84] pry(main)*       p slice      
+[84] pry(main)*       @first, @second, @third, @fourth = slice      
+[84] pry(main)*       
+[84] pry(main)*       opcode(@first)      
+[84] pry(main)*       
+[84] pry(main)*       return @return_value if @return_value      
+[84] pry(main)*     end      
+[84] pry(main)*   end    
+[84] pry(main)*   
+[84] pry(main)*   def opcode(number)  
+[84] pry(main)*     case number    
+[84] pry(main)*     when 1      
+[84] pry(main)*       @current_state[@fourth] = @current_state[@second] + @current_state[@third]      
+[84] pry(main)*     when 2      
+[84] pry(main)*       @current_state[@fourth] = @current_state[@second] * @current_state[@third]      
+[84] pry(main)*     when 99      
+[84] pry(main)*       @return_value = @current_state.first      
+[84] pry(main)*     else      
+[84] pry(main)*       raise 'something went wrong'      
+[84] pry(main)*     end      
+[84] pry(main)*   end    
+[84] pry(main)* end  
+=> :opcode
+[85] pry(main)> Computer.new(a).process 
+
+
+# PART 2
+
 # runs opcode
 # Use like c = Computer.new(input)
 # c.set(noun, verb)
